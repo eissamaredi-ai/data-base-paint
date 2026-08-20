@@ -913,93 +913,96 @@
 </body>
 </html>
 
-// داده‌های اولیه نمونه
-const initialLines = [
-    { lineNo: 'PYG-40-001-AN11-PT', size: '-', system: '1A', status: 'در انتظار' },
-    { lineNo: 'NIT-40-035-AN13-4"-PT', size: '4"', system: '1A', status: 'در انتظار' },
-    { lineNo: 'CLD-37-087-AN36-3"-UW', size: '3"', system: 'UW', status: 'رپینگ' },
-    { lineNo: 'CHM-40-001-AS03-1"-PT', size: '1"', system: '1C', status: 'در انتظار' },
-    { lineNo: 'GSL-40-002-AN11-PT', size: '-', system: '1A', status: 'در انتظار' }
-];
+<!-- ─── JavaScript Logic ─── -->
+    <script>
+        // داده‌های اولیه نمونه
+        const initialLines = [
+            { lineNo: 'PYG-40-001-AN11-PT', size: '-', system: '1A', status: 'در انتظار' },
+            { lineNo: 'NIT-40-035-AN13-4"-PT', size: '4"', system: '1A', status: 'در انتظار' },
+            { lineNo: 'CLD-37-087-AN36-3"-UW', size: '3"', system: 'UW', status: 'رپینگ' },
+            { lineNo: 'CHM-40-001-AS03-1"-PT', size: '1"', system: '1C', status: 'در انتظار' },
+            { lineNo: 'GSL-40-002-AN11-PT', size: '-', system: '1A', status: 'در انتظار' }
+        ];
 
-// بارگذاری داده‌ها از LocalStorage یا بارگذاری داده‌های اولیه
-function loadLines() {
-    const savedLines = localStorage.getItem('piping_lines');
-    return savedLines ? JSON.parse(savedLines) : initialLines;
-}
-
-// ذخیره داده‌ها در LocalStorage
-function saveLines(lines) {
-    localStorage.setItem('piping_lines', JSON.stringify(lines));
-}
-
-// رندر کردن جدول و آمار
-function renderTable() {
-    const lines = loadLines();
-    const tbody = document.querySelector('#lines-table tbody');
-    tbody.innerHTML = '';
-
-    let totalCount = lines.length;
-    let ptCount = 0;
-    let uwCount = 0;
-
-    lines.forEach(item => {
-        if (item.system === 'UW') {
-            uwCount++;
-        } else {
-            ptCount++;
+        // بارگذاری داده‌ها از LocalStorage یا بارگذاری داده‌های اولیه
+        function loadLines() {
+            const savedLines = localStorage.getItem('piping_lines');
+            return savedLines ? JSON.parse(savedLines) : initialLines;
         }
 
-        let badgeClass = 'badge-secondary';
-        if (item.status === 'رپینگ') badgeClass = 'badge-info';
-        if (item.status === 'تکمیل‌شده') badgeClass = 'badge-success';
+        // ذخیره داده‌ها در LocalStorage
+        function saveLines(lines) {
+            localStorage.setItem('piping_lines', JSON.stringify(lines));
+        }
 
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${item.lineNo}</td>
-            <td>${item.size}</td>
-            <td>${item.system}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-        `;
-        tbody.appendChild(tr);
-    });
+        // رندر کردن جدول و آمار
+        function renderTable() {
+            const lines = loadLines();
+            const tbody = document.querySelector('#lines-table tbody');
+            tbody.innerHTML = '';
 
-    // بروزرسانی آمار کارت‌ها
-    document.getElementById('stat-total').textContent = totalCount;
-    document.getElementById('stat-pt').textContent = ptCount;
-    document.getElementById('stat-uw').textContent = uwCount;
-}
+            let totalCount = lines.length;
+            let ptCount = 0;
+            let uwCount = 0;
 
-// مدیریت فرم ثبت لاین
-function handleFormSubmit(event) {
-    event.preventDefault();
+            lines.forEach(item => {
+                if (item.system === 'UW') {
+                    uwCount++;
+                } else {
+                    ptCount++;
+                }
 
-    const newLine = {
-        lineNo: document.getElementById('lineNo').value,
-        size: document.getElementById('lineSize').value,
-        system: document.getElementById('paintSystem').value,
-        status: document.getElementById('lineStatus').value
-    };
+                let badgeClass = 'badge-secondary';
+                if (item.status === 'رپینگ') badgeClass = 'badge-info';
+                if (item.status === 'تکمیل‌شده') badgeClass = 'badge-success';
 
-    const lines = loadLines();
-    lines.unshift(newLine); // اضافه به ابتدای لیست
-    saveLines(lines);
-    renderTable();
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.lineNo}</td>
+                    <td>${item.size}</td>
+                    <td>${item.system}</td>
+                    <td><span class="badge ${badgeClass}">${item.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
 
-    document.getElementById('newLineForm').reset();
-    closeModal();
-}
+            // بروزرسانی آمار کارت‌ها
+            document.getElementById('stat-total').textContent = totalCount;
+            document.getElementById('stat-pt').textContent = ptCount;
+            document.getElementById('stat-uw').textContent = uwCount;
+        }
 
-// توابع Modal
-function openModal() { document.getElementById('lineModal').style.display = 'flex'; }
-function closeModal() { document.getElementById('lineModal').style.display = 'none'; }
+        // مدیریت فرم ثبت لاین
+        function handleFormSubmit(event) {
+            event.preventDefault();
 
-// اجرای اولیه هنگام بارگذاری صفحه
-document.addEventListener('DOMContentLoaded', () => {
-    // بروزرسانی تاریخ
-    const now = new Date();
-    document.querySelector('.top-header .project-info span:last-child').innerHTML = 
-        '<span class="material-symbols-outlined">calendar_today</span> آخرین بروزرسانی: ' + now.toLocaleDateString('fa-IR');
+            const newLine = {
+                lineNo: document.getElementById('lineNo').value,
+                size: document.getElementById('lineSize').value,
+                system: document.getElementById('paintSystem').value,
+                status: document.getElementById('lineStatus').value
+            };
 
-    renderTable();
-});
+            const lines = loadLines();
+            lines.unshift(newLine); // اضافه به ابتدای لیست
+            saveLines(lines);
+            renderTable();
+
+            document.getElementById('newLineForm').reset();
+            closeModal();
+        }
+
+        // توابع Modal
+        function openModal() { document.getElementById('lineModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('lineModal').style.display = 'none'; }
+
+        // اجرای اولیه هنگام بارگذاری صفحه
+        document.addEventListener('DOMContentLoaded', () => {
+            // بروزرسانی تاریخ
+            const now = new Date();
+            document.querySelector('.top-header .project-info span:last-child').innerHTML = 
+                '<span class="material-symbols-outlined">calendar_today</span> آخرین بروزرسانی: ' + now.toLocaleDateString('fa-IR');
+
+            renderTable();
+        });
+    </script>
