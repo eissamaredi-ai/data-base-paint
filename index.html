@@ -43,3 +43,69 @@
 </html>
   );
 }
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدیریت پایپینگ و رنگ‌آمیزی پروژه</title>
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0F1E2E;
+      color: #D4E5F7;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    const BG = "#0F1E2E", SURF = "#0C1A2E", CARD = "#0F2240", BORD = "#1A3A5C";
+    const SPARK = "#2D7DD2", TEXT = "#D4E5F7", MUTED = "#5A7A9A";
+    
+    const PT_STAGES = [
+      { key: 'blast', label: 'Blasting / Primer', abbr: 'B/P', col: SPARK },
+      { key: 'ic', label: 'Intermediate Coat', abbr: 'IC', col: "#06B6D4" },
+      { key: 'tc', label: 'Top Coat', abbr: 'TC', col: "#10B981" },
+    ];
+
+    const UW_STAGES = [
+      { key: 'holiday', label: 'Wrapping / Holiday Test', abbr: 'W/H', col: "#A855F7" },
+      { key: 'primer', label: 'Primer', abbr: 'PRM', col: "#EC4899" },
+      { key: 'innerWrap', label: 'Inner Wrapping', abbr: 'I/W', col: "#F59E0B" },
+      { key: 'outerWrap', label: 'Outer Wrapping', abbr: 'O/W', col: "#22C55E" },
+    ];
+
+    function App() {
+      return (
+        <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
+          <header style={{ borderBottom: `1px solid ${BORD}`, paddingBottom: '16px', marginBottom: '24px' }}>
+            <h1 style={{ color: SPARK, margin: 0, fontSize: '24px' }}>داشبورد مدیریت پایپینگ و رنگ‌آمیزی</h1>
+            <p style={{ color: MUTED, margin: '8px 0 0 0', fontSize: '14px' }}>سامانه جامع بازرسی QC و کنترل لاین‌ها</p>
+          </header>
+          
+          <div style={{ backgroundColor: CARD, border: `1px solid ${BORD}`, borderRadius: '8px', padding: '20px' }}>
+            <h3 style={{ margin: '0 0 12px 0' }}>وضعیت سیستم: فعال</h3>
+            <p style={{ color: MUTED }}>اطلاعات با موفقیت همگام‌سازی شدند. اکنون می‌توانید بخش‌های مختلف بازرسی را مدیریت کنید.</p>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
