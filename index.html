@@ -3,246 +3,261 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Piping Paint & Wrapping Management System</title>
+  <title>سامانه جامع کنترل کیفیت رنگ و رپینگ</title>
   
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <style>
-    * { box-sizing: border-box; font-family: Segoe UI, Tahoma, sans-serif; font-size: 12px; }
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; font-size: 13px; }
     body { margin: 0; padding: 15px; background-color: #0d1117; color: #c9d1d9; }
     
+    .nav-header { display: flex; align-items: center; justify-content: space-between; background: #161b22; border: 1px solid #30363d; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; }
+    .btn-back { background: #21262d; border: 1px solid #30363d; color: #58a6ff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn-back:hover { background: #30363d; }
+    
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+    .menu-card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.2s ease; }
+    .menu-card:hover { transform: translateY(-4px); border-color: #58a6ff; }
+    .menu-card.mgmt { border-top: 4px solid #a855f7; }
+    .menu-card.paint { border-top: 4px solid #238636; }
+    .menu-card.wrap { border-top: 4px solid #0284c7; }
+    .card-icon { font-size: 40px; margin-bottom: 10px; }
+    .card-title { font-size: 18px; font-weight: bold; color: #f0f6fc; margin-bottom: 8px; }
+    .card-desc { color: #8b949e; font-size: 12px; }
+
     .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 10px; }
-    .kpi-card { background: #0d1117; border: 1px solid #30363d; padding: 10px; border-radius: 6px; text-align: center; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .kpi-card { background: #0d1117; border: 1px solid #30363d; padding: 12px; border-radius: 6px; text-align: center; }
     .kpi-val { font-size: 20px; font-weight: bold; margin-top: 4px; color: #58a6ff; }
     
     .table-container { overflow-x: auto; max-height: 550px; }
     table { width: 100%; border-collapse: collapse; white-space: nowrap; }
     th, td { border: 1px solid #30363d; padding: 6px 8px; text-align: center; }
     th { background: #21262d; color: #f0f6fc; position: sticky; top: 0; z-index: 10; }
-    .th-grp-p { background: #1b4721; color: #4ade80; }
-    .th-grp-w { background: #0c4a6e; color: #38bdf8; }
+    .th-p { background: #1b4721; color: #4ade80; }
+    .th-w { background: #0c4a6e; color: #38bdf8; }
     
     .st-ACCEPTED { background: #238636; color: #fff; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
     .st-REJECTED { background: #da3633; color: #fff; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
     .st-PENDING { background: #d97706; color: #fff; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
     
-    input, select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 5px; border-radius: 4px; width: 100%; }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
-    .btn { background: #238636; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .tab-btn { padding: 8px 16px; background: #21262d; border: 1px solid #30363d; color: #8b949e; cursor: pointer; border-radius: 6px 6px 0 0; margin-left: 4px; }
-    .tab-btn.active { background: #1f6beb; color: #fff; border-color: #1f6beb; }
+    input, select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 6px; border-radius: 4px; width: 100%; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 10px; }
+    .btn { background: #238636; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn-danger { background: #da3633; }
   </style>
 </head>
 <body>
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useMemo } = React;
-
-    const INIT_DATA = [
-      {
-        id: 1, rowNo: 1, lineNo: "LINE-1001", spoolNo: "SP-01", sheetNo: "01", paintSys: "1A", rev: "0", fluid: "HC", unitNo: "100", serialNo: "001", pipingClass: "A1", size: "6\"", insType: "N/A", row: "-", insThk: "-", phase: "1", type: "PIPING",
-        stage1_data: "2026-08-01", stage1_rep: "REP-B-01", stage1_res: "ACCEPTED",
-        stage2_data: "2026-08-02", stage2_rep: "REP-I-01", stage2_res: "ACCEPTED",
-        stage3_data: "2026-08-03", stage3_rep: "REP-T-01", stage3_res: "ACCEPTED"
-      },
-      {
-        id: 2, rowNo: 2, lineNo: "LINE-1002", spoolNo: "SP-02", sheetNo: "01", paintSys: "2B", rev: "1", fluid: "WATER", unitNo: "100", serialNo: "002", pipingClass: "B1", size: "8\"", insType: "PU", row: "A", insThk: "50", phase: "1", type: "PIPING",
-        stage1_data: "2026-08-05", stage1_rep: "REP-B-02", stage1_res: "ACCEPTED",
-        stage2_data: "2026-08-06", stage2_rep: "REP-I-02", stage2_res: "REJECTED",
-        stage3_data: "", stage3_rep: "", stage3_res: "PENDING"
-      }
-    ];
+    const { useState, useEffect } = React;
 
     const EMPTY_FORM = {
-      lineNo: '', spoolNo: '', sheetNo: '', paintSys: '', rev: '0', fluid: '', unitNo: '', serialNo: '', pipingClass: '', size: '', insType: '-', row: '-', insThk: '-', phase: '1', type: 'PIPING',
-      stage1_data: '', stage1_rep: '', stage1_res: 'PENDING',
-      stage2_data: '', stage2_rep: '', stage2_res: 'PENDING',
-      stage3_data: '', stage3_rep: '', stage3_res: 'PENDING'
+      lineNo: '', spoolNo: '', sheetNo: '', paintSys: '', unitNo: '', size: '', fluid: '', pipingClass: '', type: 'PAINT',
+      s1_date: '', s1_rep: '', s1_res: 'PENDING',
+      s2_date: '', s2_rep: '', s2_res: 'PENDING',
+      s3_date: '', s3_rep: '', s3_res: 'PENDING'
     };
 
     function App() {
-      const [data, setData] = useState(INIT_DATA);
+      const [view, setView] = useState('HOME');
+      const [data, setData] = useState(() => {
+        const saved = localStorage.getItem('qc_db_data');
+        return saved ? JSON.parse(saved) : [];
+      });
       const [form, setForm] = useState(EMPTY_FORM);
       const [showForm, setShowForm] = useState(false);
-      const [selectedUnit, setSelectedUnit] = useState('ALL');
-      const [selectedLine, setSelectedLine] = useState('ALL');
+      const [search, setSearch] = useState('');
 
-      const units = useMemo(() => ['ALL', ...new Set(data.map(d => d.unitNo).filter(Boolean))], [data]);
-      const lines = useMemo(() => ['ALL', ...new Set(data.map(d => d.lineNo).filter(Boolean))], [data]);
+      useEffect(() => {
+        localStorage.setItem('qc_db_data', JSON.stringify(data));
+      }, [data]);
 
-      const filteredData = useMemo(() => {
-        return data.filter(d => 
-          (selectedUnit === 'ALL' || d.unitNo === selectedUnit) &&
-          (selectedLine === 'ALL' || d.lineNo === selectedLine)
-        );
-      }, [data, selectedUnit, selectedLine]);
-
-      // Advanced Analytics Calculations
-      const totalSpools = filteredData.length;
-      const bComplete = filteredData.filter(d => d.stage1_res === 'ACCEPTED').length;
-      const iComplete = filteredData.filter(d => d.stage2_res === 'ACCEPTED').length;
-      const tComplete = filteredData.filter(d => d.stage3_res === 'ACCEPTED').length;
-      const totalRejected = filteredData.filter(d => d.stage1_res === 'REJECTED' || d.stage2_res === 'REJECTED' || d.stage3_res === 'REJECTED').length;
-
-      const handleFormSubmit = (e) => {
+      const handleAdd = (e) => {
         e.preventDefault();
-        if(!form.lineNo) return alert('خطا: لاین نامبر الزام است');
-        setData([...data, { ...form, id: Date.now(), rowNo: data.length + 1 }]);
+        if(!form.lineNo) return alert('وارد کردن LINE No الزامی است');
+        const newItem = { ...form, id: Date.now(), type: view === 'WRAPPING' ? 'WRAPPING' : 'PAINT' };
+        setData([...data, newItem]);
         setForm(EMPTY_FORM);
         setShowForm(false);
       };
 
-      return (
-        <div>
-          {/* Header & Management Controls */}
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h2 style={{ margin: 0, color: '#58a6ff' }}>سامانه جامع گزارش‌گیری و کنترل کیفیت پایپینگ (QC History)</h2>
-                <p style={{ margin: '4px 0 0 0', color: '#8b949e' }}>پایش پیشرفت لایه به لایه اسپول‌ها و لاین‌ها</p>
-              </div>
-              <button className="btn" style={{ background: showForm ? '#da3633' : '#238636' }} onClick={() => setShowForm(!showForm)}>
-                {showForm ? '✖ بستن فرم' : '➕ ثبت اسپول / لاین جدید'}
-              </button>
-            </div>
+      const handleDelete = (id) => {
+        if(confirm('آیا از حذف این لاین مطمئن هستید؟')) {
+          setData(data.filter(item => item.id !== id));
+        }
+      };
 
-            {/* Filter Bar */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px', padding: '10px', background: '#0d1117', borderRadius: '6px' }}>
-              <div>
-                <label style={{ fontWeight: 'bold', color: '#a5d6ff' }}>📌 فیلتر بر اساس یونیت (Unit No):</label>
-                <select value={selectedUnit} onChange={e => setSelectedUnit(e.target.value)} style={{ marginTop: '5px' }}>
-                  {units.map(u => <option key={u} value={u}>{u === 'ALL' ? 'همه یونیت‌ها' : `Unit ${u}`}</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={{ fontWeight: 'bold', color: '#a5d6ff' }}>🔍 فیلتر بر اساس لاین نامبر (Line No):</label>
-                <select value={selectedLine} onChange={e => setSelectedLine(e.target.value)} style={{ marginTop: '5px' }}>
-                  {lines.map(l => <option key={l} value={l}>{l === 'ALL' ? 'همه لاین‌ها' : l}</option>)}
-                </select>
-              </div>
+      const currentData = data.filter(d => 
+        (view === 'PAINT' ? d.type === 'PAINT' : view === 'WRAPPING' ? d.type === 'WRAPPING' : true) &&
+        (d.lineNo.toLowerCase().includes(search.toLowerCase()) || d.spoolNo.toLowerCase().includes(search.toLowerCase()))
+      );
+
+      return (
+        <div style={{ maxWidth: '1300px', margin: '0 auto' }}>
+          
+          <div className="nav-header">
+            <div>
+              <h3 style={{ margin: 0, color: '#58a6ff' }}>سامانه جامع بازرسی رنگ و رپینگ (QC History)</h3>
             </div>
+            {view !== 'HOME' && (
+              <button className="btn-back" onClick={() => { setView('HOME'); setShowForm(false); }}>
+                ⬅ بازگشت به منوی اصلی
+              </button>
+            )}
           </div>
 
-          {/* Form Modal / Add Panel */}
-          {showForm && (
-            <div className="card" style={{ border: '1px solid #1f6beb' }}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#58a6ff' }}>ورود کامل مشخصات اسپول و گزارش‌های بازرسی:</h3>
-              <form onSubmit={handleFormSubmit}>
-                <div className="form-grid">
-                  <input placeholder="LINE No. (*)" value={form.lineNo} onChange={e=>setForm({...form, lineNo: e.target.value})} required />
-                  <input placeholder="SPOOL No." value={form.spoolNo} onChange={e=>setForm({...form, spoolNo: e.target.value})} />
-                  <input placeholder="SHEET No." value={form.sheetNo} onChange={e=>setForm({...form, sheetNo: e.target.value})} />
-                  <input placeholder="PAINT SYS" value={form.paintSys} onChange={e=>setForm({...form, paintSys: e.target.value})} />
-                  <input placeholder="Unit No." value={form.unitNo} onChange={e=>setForm({...form, unitNo: e.target.value})} />
-                  <input placeholder="Fluid" value={form.fluid} onChange={e=>setForm({...form, fluid: e.target.value})} />
-                  <input placeholder="Size (Inch)" value={form.size} onChange={e=>setForm({...form, size: e.target.value})} />
-                  <input placeholder="Piping Class" value={form.pipingClass} onChange={e=>setForm({...form, pipingClass: e.target.value})} />
-                  <select value={form.type} onChange={e=>setForm({...form, type: e.target.value})}>
-                    <option value="PIPING">PIPING (روکار)</option>
-                    <option value="WRAPPING">WRAPPING (زیرزمینی)</option>
-                  </select>
-                </div>
+          {/* 1. HOME SCREEN */}
+          {view === 'HOME' && (
+            <div className="menu-grid">
+              <div className="menu-card mgmt" onClick={() => setView('MGMT')}>
+                <div className="card-icon">📊</div>
+                <div className="card-title">آمار و گزارشات مدیریت</div>
+                <div className="card-desc">تحلیل پیشرفت پروژه، درصد تایید و شناسایی گلوگاه‌ها</div>
+              </div>
 
-                <p style={{ fontWeight: 'bold', color: '#4ade80', margin: '10px 0 5px 0' }}>مرحله ۱: Blasting / Primer</p>
-                <div className="form-grid">
-                  <input type="date" value={form.stage1_data} onChange={e=>setForm({...form, stage1_data: e.target.value})} />
-                  <input placeholder="Report No." value={form.stage1_rep} onChange={e=>setForm({...form, stage1_rep: e.target.value})} />
-                  <select value={form.stage1_res} onChange={e=>setForm({...form, stage1_res: e.target.value})}>
-                    <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
-                  </select>
-                </div>
+              <div className="menu-card paint" onClick={() => setView('PAINT')}>
+                <div className="card-icon">🎨</div>
+                <div className="card-title">بخش رنگ (PIPING)</div>
+                <div className="card-desc">مدیریت لاین‌های روکار (Blasting, Intermediate, Top Coat)</div>
+              </div>
 
-                <p style={{ fontWeight: 'bold', color: '#38bdf8', margin: '10px 0 5px 0' }}>مرحله ۲: Intermediate Coat</p>
-                <div className="form-grid">
-                  <input type="date" value={form.stage2_data} onChange={e=>setForm({...form, stage2_data: e.target.value})} />
-                  <input placeholder="Report No." value={form.stage2_rep} onChange={e=>setForm({...form, stage2_rep: e.target.value})} />
-                  <select value={form.stage2_res} onChange={e=>setForm({...form, stage2_res: e.target.value})}>
-                    <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
-                  </select>
-                </div>
-
-                <p style={{ fontWeight: 'bold', color: '#a855f7', margin: '10px 0 5px 0' }}>مرحله ۳: Top Coat / Wrapping Final</p>
-                <div className="form-grid">
-                  <input type="date" value={form.stage3_data} onChange={e=>setForm({...form, stage3_data: e.target.value})} />
-                  <input placeholder="Report No." value={form.stage3_rep} onChange={e=>setForm({...form, stage3_rep: e.target.value})} />
-                  <select value={form.stage3_res} onChange={e=>setForm({...form, stage3_res: e.target.value})}>
-                    <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
-                  </select>
-                </div>
-
-                <button type="submit" className="btn" style={{ width: '100%', marginTop: '12px' }}>ذخیره اسپول در دیتابیس</button>
-              </form>
+              <div className="menu-card wrap" onClick={() => setView('WRAPPING')}>
+                <div className="card-icon">🛡️</div>
+                <div className="card-title">بخش رپینگ (WRAPPING)</div>
+                <div className="card-desc">مدیریت لاین‌های دفنی (Wrapping & Holiday Test)</div>
+              </div>
             </div>
           )}
 
-          {/* Executive Summary Output Dashboard */}
-          <div className="card">
-            <h3 style={{ margin: '0 0 10px 0', color: '#a5d6ff' }}>آمار پیشرفت تفکیکی مدیریت (Executive Progress KPI):</h3>
-            <div className="kpi-grid">
-              <div className="kpi-card"><div>کل اسپول‌های انتخاب‌شده</div><div className="kpi-val">{totalSpools}</div></div>
-              <div className="kpi-card"><div>پیشرفت Blasting</div><div className="kpi-val" style={{color:'#4ade80'}}>{totalSpools ? ((bComplete/totalSpools)*100).toFixed(0) : 0}%</div></div>
-              <div className="kpi-card"><div>پیشرفت Intermediate</div><div className="kpi-val" style={{color:'#38bdf8'}}>{totalSpools ? ((iComplete/totalSpools)*100).toFixed(0) : 0}%</div></div>
-              <div className="kpi-card"><div>تکمیل نهایی (Top Coat)</div><div className="kpi-val" style={{color:'#a855f7'}}>{totalSpools ? ((tComplete/totalSpools)*100).toFixed(0) : 0}%</div></div>
-              <div className="kpi-card"><div>لاین‌های دارای اشکال (Reject)</div><div className="kpi-val" style={{color:'#f87171'}}>{totalRejected}</div></div>
+          {/* 2. MANAGEMENT DASHBOARD */}
+          {view === 'MGMT' && (
+            <div className="card">
+              <h3 style={{ color: '#a855f7', margin: '0 0 15px 0' }}>گزارش مدیریتی و آنالیز پیشرفت</h3>
+              <div className="kpi-grid">
+                <div className="kpi-card"><div>کل لاین‌های ثبت‌شده</div><div className="kpi-val">{data.length}</div></div>
+                <div className="kpi-card"><div>کل لاین‌های رنگ (روکار)</div><div className="kpi-val" style={{color: '#4ade80'}}>{data.filter(d => d.type === 'PAINT').length}</div></div>
+                <div className="kpi-card"><div>کل لاین‌های رپینگ (دفنی)</div><div className="kpi-val" style={{color: '#38bdf8'}}>{data.filter(d => d.type === 'WRAPPING').length}</div></div>
+                <div className="kpi-card"><div>تکمیل نهایی (Accepted)</div><div className="kpi-val" style={{color: '#22c55e'}}>{data.filter(d => d.s3_res === 'ACCEPTED').length}</div></div>
+                <div className="kpi-card"><div>موارد Reject شده</div><div className="kpi-val" style={{color: '#f87171'}}>{data.filter(d => d.s1_res === 'REJECTED' || d.s2_res === 'REJECTED' || d.s3_res === 'REJECTED').length}</div></div>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Data Table */}
-          <div className="card">
-            <div className="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Row</th>
-                    <th>Unit</th>
-                    <th>LINE No.</th>
-                    <th>SPOOL No.</th>
-                    <th>Sheet</th>
-                    <th>Sys</th>
-                    <th>Size</th>
-                    <th className="th-grp-p">BLAST DATE</th>
-                    <th className="th-grp-p">BLAST REP</th>
-                    <th className="th-grp-p">BLAST RESULT</th>
-                    <th className="th-grp-w">INT DATE</th>
-                    <th className="th-grp-w">INT REP</th>
-                    <th className="th-grp-w">INT RESULT</th>
-                    <th>TOP DATE</th>
-                    <th>TOP REP</th>
-                    <th>TOP RESULT</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map(row => (
-                    <tr key={row.id}>
-                      <td>{row.rowNo}</td>
-                      <td><b>{row.unitNo || '-'}</b></td>
-                      <td><b>{row.lineNo}</b></td>
-                      <td>{row.spoolNo || '-'}</td>
-                      <td>{row.sheetNo || '-'}</td>
-                      <td>{row.paintSys || '-'}</td>
-                      <td>{row.size || '-'}</td>
-                      
-                      <td>{row.stage1_data || '-'}</td>
-                      <td>{row.stage1_rep || '-'}</td>
-                      <td><span className={`st-${row.stage1_res}`}>{row.stage1_res}</span></td>
+          {/* 3. DATA TABLES (PAINT / WRAPPING) */}
+          {(view === 'PAINT' || view === 'WRAPPING') && (
+            <div>
+              <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ color: view === 'PAINT' ? '#4ade80' : '#38bdf8', margin: 0 }}>
+                  {view === 'PAINT' ? '🎨 بانک اطلاعاتی بازرسی رنگ' : '🛡️ بانک اطلاعاتی بازرسی رپینگ'}
+                </h3>
+                <button className="btn" onClick={() => setShowForm(!showForm)}>
+                  {showForm ? '✖ بستن فرم' : '➕ ثبت لاین / اسپول جدید'}
+                </button>
+              </div>
 
-                      <td>{row.stage2_data || '-'}</td>
-                      <td>{row.stage2_rep || '-'}</td>
-                      <td><span className={`st-${row.stage2_res}`}>{row.stage2_res}</span></td>
+              {/* INPUT FORM */}
+              {showForm && (
+                <div className="card" style={{ border: '1px solid #58a6ff' }}>
+                  <form onSubmit={handleAdd}>
+                    <h4 style={{ color: '#58a6ff', margin: '0 0 8px 0' }}>اطلاعات شناسنامه لاین:</h4>
+                    <div className="form-grid">
+                      <input placeholder="LINE No (*)" value={form.lineNo} onChange={e=>setForm({...form, lineNo: e.target.value})} required />
+                      <input placeholder="SPOOL No" value={form.spoolNo} onChange={e=>setForm({...form, spoolNo: e.target.value})} />
+                      <input placeholder="SHEET No" value={form.sheetNo} onChange={e=>setForm({...form, sheetNo: e.target.value})} />
+                      <input placeholder="PAINT SYS" value={form.paintSys} onChange={e=>setForm({...form, paintSys: e.target.value})} />
+                      <input placeholder="Unit No" value={form.unitNo} onChange={e=>setForm({...form, unitNo: e.target.value})} />
+                      <input placeholder="Size (Inch)" value={form.size} onChange={e=>setForm({...form, size: e.target.value})} />
+                    </div>
 
-                      <td>{row.stage3_data || '-'}</td>
-                      <td>{row.stage3_rep || '-'}</td>
-                      <td><span className={`st-${row.stage3_res}`}>{row.stage3_res}</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                    <h4 style={{ color: '#4ade80', margin: '8px 0' }}>
+                      {view === 'PAINT' ? 'مرحله ۱: Blasting / Primer' : 'مرحله ۱: Wrapping / Holiday'}
+                    </h4>
+                    <div className="form-grid">
+                      <input type="date" value={form.s1_date} onChange={e=>setForm({...form, s1_date: e.target.value})} />
+                      <input placeholder="Report No" value={form.s1_rep} onChange={e=>setForm({...form, s1_rep: e.target.value})} />
+                      <select value={form.s1_res} onChange={e=>setForm({...form, s1_res: e.target.value})}>
+                        <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
+                      </select>
+                    </div>
+
+                    <h4 style={{ color: '#38bdf8', margin: '8px 0' }}>
+                      {view === 'PAINT' ? 'مرحله ۲: Intermediate' : 'مرحله ۲: Primer'}
+                    </h4>
+                    <div className="form-grid">
+                      <input type="date" value={form.s2_date} onChange={e=>setForm({...form, s2_date: e.target.value})} />
+                      <input placeholder="Report No" value={form.s2_rep} onChange={e=>setForm({...form, s2_rep: e.target.value})} />
+                      <select value={form.s2_res} onChange={e=>setForm({...form, s2_res: e.target.value})}>
+                        <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
+                      </select>
+                    </div>
+
+                    <h4 style={{ color: '#a855f7', margin: '8px 0' }}>
+                      {view === 'PAINT' ? 'مرحله ۳: Top Coat' : 'مرحله ۳: Outer Wrapping'}
+                    </h4>
+                    <div className="form-grid">
+                      <input type="date" value={form.s3_date} onChange={e=>setForm({...form, s3_date: e.target.value})} />
+                      <input placeholder="Report No" value={form.s3_rep} onChange={e=>setForm({...form, s3_rep: e.target.value})} />
+                      <select value={form.s3_res} onChange={e=>setForm({...form, s3_res: e.target.value})}>
+                        <option value="PENDING">PENDING</option><option value="ACCEPTED">ACCEPTED</option><option value="REJECTED">REJECTED</option>
+                      </select>
+                    </div>
+
+                    <button type="submit" className="btn" style={{ width: '100%', marginTop: '10px' }}>ثبت در دیتابیس</button>
+                  </form>
+                </div>
+              )}
+
+              {/* TABLE */}
+              <div className="card">
+                <input type="text" placeholder="جستجو سریع..." value={search} onChange={e => setSearch(e.target.value)} style={{ marginBottom: '10px' }} />
+                <div className="table-container">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Unit</th>
+                        <th>LINE No</th>
+                        <th>SPOOL No</th>
+                        <th>Sheet</th>
+                        <th>SYS</th>
+                        <th>Size</th>
+                        <th className={view==='PAINT'?'th-p':'th-w'}>مرحله ۱ (گزارش/نتیجه)</th>
+                        <th className={view==='PAINT'?'th-p':'th-w'}>مرحله ۲ (گزارش/نتیجه)</th>
+                        <th className={view==='PAINT'?'th-p':'th-w'}>مرحله ۳ (گزارش/نتیجه)</th>
+                        <th>عملیات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentData.length === 0 ? (
+                        <tr><td colSpan="11">هیچ اطلاعاتی ثبت نشده است. از دکمه بالا لاین جدید اضافه کنید.</td></tr>
+                      ) : (
+                        currentData.map((row, idx) => (
+                          <tr key={row.id}>
+                            <td>{idx + 1}</td>
+                            <td>{row.unitNo || '-'}</td>
+                            <td><b>{row.lineNo}</b></td>
+                            <td>{row.spoolNo || '-'}</td>
+                            <td>{row.sheetNo || '-'}</td>
+                            <td>{row.paintSys || '-'}</td>
+                            <td>{row.size || '-'}</td>
+                            <td>{row.s1_rep} (<span className={`st-${row.s1_res}`}>{row.s1_res}</span>)</td>
+                            <td>{row.s2_rep} (<span className={`st-${row.s2_res}`}>{row.s2_res}</span>)</td>
+                            <td>{row.s3_rep} (<span className={`st-${row.s3_res}`}>{row.s3_res}</span>)</td>
+                            <td><button className="btn btn-danger" style={{padding: '2px 6px'}} onClick={() => handleDelete(row.id)}>حذف</button></td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
+
         </div>
       );
     }
