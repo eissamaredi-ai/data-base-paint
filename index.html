@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دیتابیس رنگ و عایق پایپینگ | پروژه بنزن و گازولین</title>
+    <!-- اضافه کردن فونت آیکون گوگل -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         :root {
             --primary: #1a5276;
@@ -29,11 +31,16 @@
         }
 
         body {
-            font-family: 'Vazirmatn', 'Inter', 'Segoe UI', sans-serif;
+            font-family: 'Vazirmatn', 'Tahoma', 'Segoe UI', sans-serif;
             background: var(--bg);
             color: var(--text);
             display: flex;
             min-height: 100vh;
+        }
+
+        .material-symbols-outlined {
+            vertical-align: middle;
+            font-size: 20px;
         }
 
         /* ─── Sidebar ─── */
@@ -87,11 +94,6 @@
             background: var(--sidebar-hover);
             color: #fff;
             border-left: 3px solid var(--accent);
-        }
-
-        .sidebar-nav li a .icon {
-            width: 20px;
-            text-align: center;
         }
 
         .sidebar-section {
@@ -148,7 +150,7 @@
         /* ─── Stats Cards ─── */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -175,14 +177,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
         }
 
-        .stat-icon.blue { background: #d6eaf8; }
-        .stat-icon.green { background: #d5f5e3; }
-        .stat-icon.orange { background: #fdebd0; }
-        .stat-icon.red { background: #fadbd8; }
-        .stat-icon.purple { background: #e8daef; }
+        .stat-icon.blue { background: #d6eaf8; color: #1a5276; }
+        .stat-icon.green { background: #d5f5e3; color: #1e8449; }
+        .stat-icon.orange { background: #fdebd0; color: #b9770e; }
+        .stat-icon.red { background: #fadbd8; color: #922b21; }
+        .stat-icon.purple { background: #e8daef; color: #6c3483; }
 
         .stat-info h3 {
             font-size: 24px;
@@ -224,6 +225,9 @@
         .card-header h3 {
             font-size: 14px;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .card-header a {
@@ -324,6 +328,7 @@
             color: var(--text);
             font-size: 12px;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .action-btn:hover {
@@ -355,6 +360,86 @@
             border-radius: 50%;
         }
 
+        /* ─── Modal (فرم افزودن لاین جدید) ─── */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+
         /* ─── Footer ─── */
         .footer {
             padding: 15px 30px;
@@ -363,32 +448,6 @@
             color: var(--text-light);
             border-top: 1px solid var(--border);
             background: var(--card);
-        }
-
-        /* ─── Responsive ─── */
-        @media (max-width: 1024px) {
-            .content-grid,
-            .content-grid.equal {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 60px;
-            }
-            .sidebar .sidebar-header h2,
-            .sidebar .sidebar-header p,
-            .sidebar-nav li a span,
-            .sidebar-section {
-                display: none;
-            }
-            .main-content {
-                margin-right: 60px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
         }
     </style>
 </head>
@@ -403,26 +462,26 @@
 
         <ul class="sidebar-nav">
             <div class="sidebar-section">منوی اصلی</div>
-            <li><a href="#" class="active"><span class="icon">📊</span> داشبورد</a></li>
-            <li><a href="#"><span class="icon">📋</span> لیست لاین‌ها</a></li>
-            <li><a href="#"><span class="icon">🎨</span> سیستم‌های رنگ</a></li>
-            <li><a href="#"><span class="icon">🧊</span> سیستم‌های عایق</a></li>
+            <li><a href="#" class="active"><span class="material-symbols-outlined">dashboard</span> داشبورد</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">format_list_bulleted</span> لیست لاین‌ها</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">palette</span> سیستم‌های رنگ</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">ac_unit</span> سیستم‌های عایق</a></li>
 
             <div class="sidebar-section">کنترل کیفیت</div>
-            <li><a href="#"><span class="icon">✅</span> تست‌های رنگ</a></li>
-            <li><a href="#"><span class="icon">🔍</span> تست‌های رپینگ</a></li>
-            <li><a href="#"><span class="icon">📄</span> فرم‌های QC</a></li>
-            <li><a href="#"><span class="icon">📑</span> ITP</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">verified</span> تست‌های رنگ</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">search</span> تست‌های رپینگ</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">description</span> فرم‌های QC</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">assignment</span> ITP</a></li>
 
             <div class="sidebar-section">مدیریت</div>
-            <li><a href="#"><span class="icon">📈</span> گزارش مصرف رنگ</a></li>
-            <li><a href="#"><span class="icon">📉</span> گزارش باقیمانده</a></li>
-            <li><a href="#"><span class="icon">🕐</span> تاریخچه کار</a></li>
-            <li><a href="#"><span class="icon">📁</span> مدارک پروژه</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">bar_chart</span> گزارش مصرف رنگ</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">trending_down</span> گزارش باقیمانده</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">history</span> تاریخچه کار</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">folder</span> مدارک پروژه</a></li>
 
             <div class="sidebar-section">تنظیمات</div>
-            <li><a href="#"><span class="icon">⚙️</span> تنظیمات</a></li>
-            <li><a href="#"><span class="icon">💾</span> پشتیبان‌گیری</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">settings</span> تنظیمات</a></li>
+            <li><a href="#"><span class="material-symbols-outlined">backup</span> پشتیبان‌گیری</a></li>
         </ul>
     </aside>
 
@@ -433,9 +492,9 @@
         <header class="top-header">
             <h1>داشبورد مدیریت رنگ و عایق پایپینگ</h1>
             <div class="project-info">
-                <span>📄 228-DD-000-QC-PRC-0092</span>
-                <span>🏗️ واحد 400 - Tank Farm</span>
-                <span>📅 آخرین بروزرسانی: 1405/05/29</span>
+                <span><span class="material-symbols-outlined">article</span> 228-DD-000-QC-PRC-0092</span>
+                <span><span class="material-symbols-outlined">domain</span> واحد 400 - Tank Farm</span>
+                <span><span class="material-symbols-outlined">calendar_today</span> آخرین بروزرسانی: 1405/05/29</span>
             </div>
         </header>
 
@@ -445,35 +504,35 @@
             <!-- Stats Cards -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon blue">📋</div>
+                    <div class="stat-icon blue"><span class="material-symbols-outlined">list_alt</span></div>
                     <div class="stat-info">
-                        <h3>468</h3>
+                        <h3 id="stat-total">468</h3>
                         <p>کل لاین‌ها (ردیف Line List)</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon green">🎨</div>
+                    <div class="stat-icon green"><span class="material-symbols-outlined">format_paint</span></div>
                     <div class="stat-info">
-                        <h3>441</h3>
+                        <h3 id="stat-pt">441</h3>
                         <p>لاین‌های رنگ‌آمیزی (PT)</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon orange">🔧</div>
+                    <div class="stat-icon orange"><span class="material-symbols-outlined">build</span></div>
                     <div class="stat-info">
-                        <h3>27</h3>
+                        <h3 id="stat-uw">27</h3>
                         <p>لاین‌های رپینگ (UW)</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon red">⚠️</div>
+                    <div class="stat-icon red"><span class="material-symbols-outlined">warning</span></div>
                     <div class="stat-info">
                         <h3>0</h3>
                         <p>تست‌های مردود</p>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon purple">📝</div>
+                    <div class="stat-icon purple"><span class="material-symbols-outlined">assignment_turned_in</span></div>
                     <div class="stat-info">
                         <h3>0</h3>
                         <p>فرم QC تکمیل‌شده</p>
@@ -485,7 +544,7 @@
             <div class="content-grid">
                 <div class="card">
                     <div class="card-header">
-                        <h3>📊 پیشرفت رنگ‌آمیزی به تفکیک سیستم</h3>
+                        <h3><span class="material-symbols-outlined">analytics</span> پیشرفت رنگ‌آمیزی به تفکیک سیستم</h3>
                         <a href="#">مشاهده جزئیات</a>
                     </div>
                     <div class="card-body">
@@ -521,16 +580,16 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3>⚡ دسترسی سریع</h3>
+                        <h3><span class="material-symbols-outlined">bolt</span> دسترسی سریع</h3>
                     </div>
                     <div class="card-body">
                         <div class="quick-actions">
-                            <a href="#" class="action-btn">➕ ثبت تست جدید</a>
-                            <a href="#" class="action-btn">📋 افزودن لاین</a>
-                            <a href="#" class="action-btn">🎨 سیستم رنگ</a>
-                            <a href="#" class="action-btn">📄 فرم QC</a>
-                            <a href="#" class="action-btn">📊 گزارش مصرف</a>
-                            <a href="#" class="action-btn">📁 آپلود مدرک</a>
+                            <button class="action-btn" onclick="openModal()"><span class="material-symbols-outlined">add_circle</span> افزودن لاین</button>
+                            <a href="#" class="action-btn"><span class="material-symbols-outlined">post_add</span> ثبت تست جدید</a>
+                            <a href="#" class="action-btn"><span class="material-symbols-outlined">palette</span> سیستم رنگ</a>
+                            <a href="#" class="action-btn"><span class="material-symbols-outlined">note_add</span> فرم QC</a>
+                            <a href="#" class="action-btn"><span class="material-symbols-outlined">equalizer</span> گزارش مصرف</a>
+                            <a href="#" class="action-btn"><span class="material-symbols-outlined">upload_file</span> آپلود مدرک</a>
                         </div>
                     </div>
                 </div>
@@ -540,11 +599,11 @@
             <div class="content-grid equal">
                 <div class="card">
                     <div class="card-header">
-                        <h3>📋 آخرین لاین‌های ثبت‌شده</h3>
+                        <h3><span class="material-symbols-outlined">view_list</span> آخرین لاین‌های ثبت‌شده</h3>
                         <a href="#">مشاهده همه</a>
                     </div>
                     <div class="card-body">
-                        <table class="data-table">
+                        <table class="data-table" id="lines-table">
                             <thead>
                                 <tr>
                                     <th>شماره لاین</th>
@@ -591,7 +650,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3>🎨 سیستم‌های رنگ فعال</h3>
+                        <h3><span class="material-symbols-outlined">style</span> سیستم‌های رنگ فعال</h3>
                         <a href="#">مشاهده همه</a>
                     </div>
                     <div class="card-body">
@@ -637,7 +696,7 @@
             <div class="content-grid equal">
                 <div class="card">
                     <div class="card-header">
-                        <h3>✅ وضعیت تست‌های اخیر</h3>
+                        <h3><span class="material-symbols-outlined">fact_check</span> وضعیت تست‌های اخیر</h3>
                         <a href="#">مشاهده همه</a>
                     </div>
                     <div class="card-body">
@@ -682,7 +741,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h3>📁 مدارک مرجع</h3>
+                        <h3><span class="material-symbols-outlined">folder_shared</span> مدارک مرجع</h3>
                     </div>
                     <div class="card-body">
                         <table class="data-table">
@@ -734,9 +793,57 @@
 
     </main>
 
-    <!-- ─── Simple JavaScript ─── -->
+    <!-- ─── Modal Form (افزودن لاین جدید) ─── -->
+    <div class="modal" id="lineModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ ثبت مشخصات لاین جدید</h3>
+                <span class="material-symbols-outlined" style="cursor:pointer" onclick="closeModal()">close</span>
+            </div>
+            <form id="newLineForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>شماره کامل لاین (Line Number)</label>
+                        <input type="text" id="lineNo" placeholder="مثال: PYG-40-001-AN11-PT" required>
+                    </div>
+                    <div class="form-group">
+                        <label>سایز (Size)</label>
+                        <input type="text" id="lineSize" placeholder='مثال: "4' required>
+                    </div>
+                    <div class="form-group">
+                        <label>سیستم رنگ / عایق</label>
+                        <select id="paintSystem" required>
+                            <option value="1A">1A - بدون عایق ≤120°C</option>
+                            <option value="2A">2A - بدون عایق 121-400°C</option>
+                            <option value="3A">3A - بدون عایق 401-600°C</option>
+                            <option value="1B">1B - عایق‌دار ≤120°C</option>
+                            <option value="2B">2B - عایق‌دار 121-400°C</option>
+                            <option value="1C">1C - استنلس استیل ≤120°C</option>
+                            <option value="2C">2C - استنلس استیل 121-400°C</option>
+                            <option value="UW">UW - رپینگ زیرزمینی</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>وضعیت فعلی</label>
+                        <select id="lineStatus">
+                            <option value="در انتظار">در انتظار</option>
+                            <option value="رپینگ">رپینگ</option>
+                            <option value="در حال سندبلاست">در حال سندبلاست</option>
+                            <option value="تکمیل‌شده">تکمیل‌شده</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">انصراف</button>
+                    <button type="submit" class="btn btn-primary">ثبت در دیتابیس</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ─── JavaScript Logic ─── -->
     <script>
-        // Active navigation
+        // کنترل منوی فعال Sidebar
         document.querySelectorAll('.sidebar-nav a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -745,12 +852,154 @@
             });
         });
 
-        // Update date
+        // بروزرسانی تاریخ شمسی خودکار
         const now = new Date();
         const persianDate = now.toLocaleDateString('fa-IR');
-        document.querySelector('.top-header .project-info span:last-child').textContent = 
-            '📅 آخرین بروزرسانی: ' + persianDate;
+        document.querySelector('.top-header .project-info span:last-child').innerHTML = 
+            '<span class="material-symbols-outlined">calendar_today</span> آخرین بروزرسانی: ' + persianDate;
+
+        // مدیریت باز و بسته شدن فرم Modal
+        function openModal() {
+            document.getElementById('lineModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('lineModal').style.display = 'none';
+        }
+
+        // افزودن داده جدید به جدول و شمارنده‌ها
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const lineNo = document.getElementById('lineNo').value;
+            const size = document.getElementById('lineSize').value;
+            const system = document.getElementById('paintSystem').value;
+            const status = document.getElementById('lineStatus').value;
+
+            // انتخاب استایل Badge بر اساس وضعیت
+            let badgeClass = 'badge-secondary';
+            if (status === 'رپینگ') badgeClass = 'badge-info';
+            if (status === 'تکمیل‌شده') badgeClass = 'badge-success';
+
+            // اضافه کردن سطر به ابتدای جدول
+            const tbody = document.querySelector('#lines-table tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${lineNo}</td>
+                <td>${size}</td>
+                <td>${system}</td>
+                <td><span class="badge ${badgeClass}">${status}</span></td>
+            `;
+            tbody.insertBefore(newRow, tbody.firstChild);
+
+            // بروزرسانی آمار کارت‌ها
+            const totalElem = document.getElementById('stat-total');
+            totalElem.textContent = parseInt(totalElem.textContent) + 1;
+
+            if (system === 'UW') {
+                const uwElem = document.getElementById('stat-uw');
+                uwElem.textContent = parseInt(uwElem.textContent) + 1;
+            } else {
+                const ptElem = document.getElementById('stat-pt');
+                ptElem.textContent = parseInt(ptElem.textContent) + 1;
+            }
+
+            // ریست فرم و بستن مدال
+            document.getElementById('newLineForm').reset();
+            closeModal();
+        }
     </script>
 
 </body>
 </html>
+
+// داده‌های اولیه نمونه
+const initialLines = [
+    { lineNo: 'PYG-40-001-AN11-PT', size: '-', system: '1A', status: 'در انتظار' },
+    { lineNo: 'NIT-40-035-AN13-4"-PT', size: '4"', system: '1A', status: 'در انتظار' },
+    { lineNo: 'CLD-37-087-AN36-3"-UW', size: '3"', system: 'UW', status: 'رپینگ' },
+    { lineNo: 'CHM-40-001-AS03-1"-PT', size: '1"', system: '1C', status: 'در انتظار' },
+    { lineNo: 'GSL-40-002-AN11-PT', size: '-', system: '1A', status: 'در انتظار' }
+];
+
+// بارگذاری داده‌ها از LocalStorage یا بارگذاری داده‌های اولیه
+function loadLines() {
+    const savedLines = localStorage.getItem('piping_lines');
+    return savedLines ? JSON.parse(savedLines) : initialLines;
+}
+
+// ذخیره داده‌ها در LocalStorage
+function saveLines(lines) {
+    localStorage.setItem('piping_lines', JSON.stringify(lines));
+}
+
+// رندر کردن جدول و آمار
+function renderTable() {
+    const lines = loadLines();
+    const tbody = document.querySelector('#lines-table tbody');
+    tbody.innerHTML = '';
+
+    let totalCount = lines.length;
+    let ptCount = 0;
+    let uwCount = 0;
+
+    lines.forEach(item => {
+        if (item.system === 'UW') {
+            uwCount++;
+        } else {
+            ptCount++;
+        }
+
+        let badgeClass = 'badge-secondary';
+        if (item.status === 'رپینگ') badgeClass = 'badge-info';
+        if (item.status === 'تکمیل‌شده') badgeClass = 'badge-success';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.lineNo}</td>
+            <td>${item.size}</td>
+            <td>${item.system}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    // بروزرسانی آمار کارت‌ها
+    document.getElementById('stat-total').textContent = totalCount;
+    document.getElementById('stat-pt').textContent = ptCount;
+    document.getElementById('stat-uw').textContent = uwCount;
+}
+
+// مدیریت فرم ثبت لاین
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const newLine = {
+        lineNo: document.getElementById('lineNo').value,
+        size: document.getElementById('lineSize').value,
+        system: document.getElementById('paintSystem').value,
+        status: document.getElementById('lineStatus').value
+    };
+
+    const lines = loadLines();
+    lines.unshift(newLine); // اضافه به ابتدای لیست
+    saveLines(lines);
+    renderTable();
+
+    document.getElementById('newLineForm').reset();
+    closeModal();
+}
+
+// توابع Modal
+function openModal() { document.getElementById('lineModal').style.display = 'flex'; }
+function closeModal() { document.getElementById('lineModal').style.display = 'none'; }
+
+// اجرای اولیه هنگام بارگذاری صفحه
+document.addEventListener('DOMContentLoaded', () => {
+    // بروزرسانی تاریخ
+    const now = new Date();
+    document.querySelector('.top-header .project-info span:last-child').innerHTML = 
+        '<span class="material-symbols-outlined">calendar_today</span> آخرین بروزرسانی: ' + now.toLocaleDateString('fa-IR');
+
+    renderTable();
+});
