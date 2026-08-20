@@ -3,133 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدیریت پایپینگ و رنگ‌آمیزی پروژه</title>
-  
-  <!-- React & ReactDOM -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <!-- Babel for JSX -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      background-color: #0F1E2E;
-      color: #D4E5F7;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-  </style>
-</head>
-<body>
-  <div id="root"></div>
-
-  <script type="text/babel">
-    const { useState, useMemo } = React;
-
-    function App() {
-      return (
-        <div style={{ padding: '20px', textAlign: 'center' }}>
-          <h1 style={{ color: '#2D7DD2' }}>سیستم مدیریت رنگ و بازرسی پایپینگ</h1>
-          <p>اطلاعات با موفقیت بارگذاری شدند.</p>
-        </div>
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
-</body>
-</html>
-  );
-}
-
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدیریت پایپینگ و رنگ‌آمیزی پروژه</title>
+  <title>Paint & Wrapping Quality Control Database</title>
   
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0F1E2E;
-      color: #D4E5F7;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-  </style>
-</head>
-<body>
-  <div id="root"></div>
-
-  <script type="text/babel">
-    const { useState, useMemo } = React;
-
-    const BG = "#0F1E2E", SURF = "#0C1A2E", CARD = "#0F2240", BORD = "#1A3A5C";
-    const SPARK = "#2D7DD2", TEXT = "#D4E5F7", MUTED = "#5A7A9A";
+    * { box-sizing: border-box; font-family: Segoe UI, Tahoma, sans-serif; font-size: 13px; }
+    body { margin: 0; padding: 15px; background-color: #0d1117; color: #c9d1d9; }
     
-    const PT_STAGES = [
-      { key: 'blast', label: 'Blasting / Primer', abbr: 'B/P', col: SPARK },
-      { key: 'ic', label: 'Intermediate Coat', abbr: 'IC', col: "#06B6D4" },
-      { key: 'tc', label: 'Top Coat', abbr: 'TC', col: "#10B981" },
-    ];
-
-    const UW_STAGES = [
-      { key: 'holiday', label: 'Wrapping / Holiday Test', abbr: 'W/H', col: "#A855F7" },
-      { key: 'primer', label: 'Primer', abbr: 'PRM', col: "#EC4899" },
-      { key: 'innerWrap', label: 'Inner Wrapping', abbr: 'I/W', col: "#F59E0B" },
-      { key: 'outerWrap', label: 'Outer Wrapping', abbr: 'O/W', col: "#22C55E" },
-    ];
-
-    function App() {
-      return (
-        <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
-          <header style={{ borderBottom: `1px solid ${BORD}`, paddingBottom: '16px', marginBottom: '24px' }}>
-            <h1 style={{ color: SPARK, margin: 0, fontSize: '24px' }}>داشبورد مدیریت پایپینگ و رنگ‌آمیزی</h1>
-            <p style={{ color: MUTED, margin: '8px 0 0 0', fontSize: '14px' }}>سامانه جامع بازرسی QC و کنترل لاین‌ها</p>
-          </header>
-          
-          <div style={{ backgroundColor: CARD, border: `1px solid ${BORD}`, borderRadius: '8px', padding: '20px' }}>
-            <h3 style={{ margin: '0 0 12px 0' }}>وضعیت سیستم: فعال</h3>
-            <p style={{ color: MUTED }}>اطلاعات با موفقیت همگام‌سازی شدند. اکنون می‌توانید بخش‌های مختلف بازرسی را مدیریت کنید.</p>
-          </div>
-        </div>
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مدیریت پایپینگ و رنگ‌آمیزی پروژه</title>
-  
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
-  <style>
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-    body { margin: 0; padding: 20px; background-color: #0F1E2E; color: #D4E5F7; }
-    .card { background: #0F2240; border: 1px solid #1A3A5C; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-    .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th, td { border: 1px solid #1A3A5C; padding: 10px; text-align: right; }
-    th { background: #0C1A2E; color: #2D7DD2; }
-    input, select { background: #0C1A2E; border: 1px solid #1A3A5C; color: #fff; padding: 8px; border-radius: 4px; width: 100%; }
+    /* Tabs Header */
+    .tab-btn { padding: 10px 20px; background: #21262d; border: 1px solid #30363d; color: #8b949e; cursor: pointer; font-weight: bold; border-radius: 6px 6px 0 0; margin-left: 5px; }
+    .tab-btn.active-piping { background: #2e7d32; color: #fff; border-color: #2e7d32; }
+    .tab-btn.active-wrapping { background: #0284c7; color: #fff; border-color: #0284c7; }
+    
+    /* Layout Cards */
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 15px; }
+    .kpi-card { background: #0d1117; border: 1px solid #30363d; padding: 12px; border-radius: 6px; text-align: center; }
+    .kpi-val { font-size: 22px; font-weight: bold; margin-top: 5px; color: #58a6ff; }
+    
+    /* Excel Table Styling */
+    .table-container { overflow-x: auto; max-height: 600px; }
+    table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+    th, td { border: 1px solid #30363d; padding: 6px 8px; text-align: center; }
+    th { background: #21262d; color: #f0f6fc; font-weight: 600; position: sticky; top: 0; z-index: 10; }
+    .th-group-piping { background: #1b4721; color: #4ade80; }
+    .th-group-wrapping { background: #0c4a6e; color: #38bdf8; }
+    
+    /* Badges & Inputs */
+    .st-ACCEPTED { background: #238636; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    .st-REJECTED { background: #da3633; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    .st-PENDING { background: #d97706; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    input, select { background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 5px; border-radius: 4px; width: 100%; }
+    .btn-add { background: #238636; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -138,72 +46,142 @@
   <script type="text/babel">
     const { useState } = React;
 
-    const SAMPLE_DATA = [
-      { lineNo: "LINE-1001-A1", system: "1A", type: "PT", stage: "Top Coat", status: "ACCEPTED", inspector: "علی محمدی" },
-      { lineNo: "LINE-1002-B2", system: "2A", type: "PT", stage: "Intermediate Coat", status: "IN_PROGRESS", inspector: "رضا حسینی" },
-      { lineNo: "LINE-2001-UW", system: "UW-1", type: "UW", stage: "Primer", status: "REJECTED", inspector: "امیر طاهری" }
+    const INITIAL_PIPING = [
+      { id: 1, rowNo: 1, lineNo: "LINE-101-A", spoolNo: "SP-01", sheetNo: "01", paintSys: "1A", rev: "0", fluid: "HC", unitNo: "100", serialNo: "001", pipingClass: "A1", size: "6\"", insType: "N/A", row: "-", insThk: "-", phase: "1", bData: "2026-08-01", bReport: "REP-01", bResult: "ACCEPTED", iData: "2026-08-02", iReport: "REP-02", iResult: "ACCEPTED", tData: "2026-08-03", tReport: "REP-03", tResult: "ACCEPTED" }
     ];
 
     function App() {
-      const [lines, setLines] = useState(SAMPLE_DATA);
-      const [search, setSearch] = useState("");
+      const [activeTab, setActiveTab] = useState('PIPING'); // 'PIPING' or 'WRAPPING'
+      const [pipingData, setPipingData] = useState(INITIAL_PIPING);
+      const [search, setSearch] = useState('');
 
-      const filteredLines = lines.filter(l => l.lineNo.toLowerCase().includes(search.toLowerCase()));
+      // KPI Calculations
+      const totalLines = pipingData.length;
+      const acceptedLines = pipingData.filter(d => d.tResult === 'ACCEPTED').length;
+      const rejectedLines = pipingData.filter(d => d.bResult === 'REJECTED' || d.iResult === 'REJECTED' || d.tResult === 'REJECTED').length;
 
       return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <h2 style={{ margin: 0, color: '#2D7DD2' }}>سامانه جامع مدیریت و بازرسی رنگ پایپینگ</h2>
-              <p style={{ margin: '5px 0 0 0', color: '#5A7A9A' }}>پایش آنلاین بیش از ۱۰۰۰ لاین و سابقه تست‌ها</p>
-            </div>
-            <div style={{ textAlign: 'left' }}>
-              <span className="badge" style={{ background: '#22C55E22', color: '#22C55E', border: '1px solid #22C55E' }}>دیتابیس فعال</span>
+        <div>
+          {/* Top Bar / Stats Output */}
+          <div className="card">
+            <h2 style={{ margin: '0 0 10px 0', color: '#58a6ff' }}>داشبورد هدر و آمار دقیق بازرسی پایپینگ و رنگ (QC Database)</h2>
+            <div className="kpi-grid">
+              <div className="kpi-card"><div>کل لاین‌های ثبت‌شده</div><div className="kpi-val">{totalLines}</div></div>
+              <div className="kpi-card"><div>تایید نهایی (Accepted)</div><div className="kpi-val" style={{color: '#4ade80'}}>{acceptedLines}</div></div>
+              <div className="kpi-card"><div>دارای ریجکتی (Rejected)</div><div className="kpi-val" style={{color: '#f87171'}}>{rejectedLines}</div></div>
+              <div className="kpi-card"><div>نرخ قبولی (Acceptance Rate)</div><div className="kpi-val">{totalLines ? ((acceptedLines/totalLines)*100).toFixed(1) : 0}%</div></div>
             </div>
           </div>
 
-          <div className="card">
-            <input 
-              type="text" 
-              placeholder="جستجوی لاین نامبر (مثلاً LINE-1001)..." 
-              value={search} 
-              onChange={(e) => setSearch(e.target.value)}
-            />
+          {/* Tab Navigation */}
+          <div>
+            <button className={`tab-btn ${activeTab === 'PIPING' ? 'active-piping' : ''}`} onClick={() => setActiveTab('PIPING')}>
+              📊 PIPING (روکار / رنگ)
+            </button>
+            <button className={`tab-btn ${activeTab === 'WRAPPING' ? 'active-wrapping' : ''}`} onClick={() => setActiveTab('WRAPPING')}>
+              🛡️ WRAPPING HOLIDAY (زیرزمینی / رپینگ)
+            </button>
           </div>
 
-          <div className="card">
-            <h3>جدول سابقه بازرسی لاین‌ها (Joint History)</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>لاین نامبر</th>
-                  <th>سیستم رنگ</th>
-                  <th>نوع پوشش</th>
-                  <th>مرحله فعلی</th>
-                  <th>وضعیت بازرسی</th>
-                  <th>بازرس</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredLines.map((item, index) => (
-                  <tr key={index}>
-                    <td><b>{item.lineNo}</b></td>
-                    <td>{item.system}</td>
-                    <td>{item.type}</td>
-                    <td>{item.stage}</td>
-                    <td>
-                      <span className="badge" style={{
-                        background: item.status === 'ACCEPTED' ? '#22C55E33' : item.status === 'REJECTED' ? '#EF444433' : '#F59E0B33',
-                        color: item.status === 'ACCEPTED' ? '#22C55E' : item.status === 'REJECTED' ? '#EF4444' : '#F59E0B'
-                      }}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td>{item.inspector}</td>
+          {/* Search & Actions */}
+          <div className="card" style={{ borderRadius: '0 8px 8px 8px' }}>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+              <input 
+                type="text" 
+                placeholder="جستجو بر اساس LINE No ، Spool No یا Paint Sys..." 
+                value={search} 
+                onChange={e => setSearch(e.target.value)} 
+              />
+            </div>
+
+            {/* Main Table */}
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th rowSpan="2">Row No</th>
+                    <th rowSpan="2">LINE No.</th>
+                    <th rowSpan="2">SPOOL No.</th>
+                    <th rowSpan="2">SHEET No.</th>
+                    <th rowSpan="2">PAINT SYS</th>
+                    <th rowSpan="2">Rev.</th>
+                    <th rowSpan="2">Fluid</th>
+                    <th rowSpan="2">Unite No</th>
+                    <th rowSpan="2">Serial No.</th>
+                    <th rowSpan="2">Piping Class</th>
+                    <th rowSpan="2">Size (Inch)</th>
+                    <th rowSpan="2">Insulation Type</th>
+                    <th rowSpan="2">ROW</th>
+                    <th rowSpan="2">Insulation Thk. (mm)</th>
+                    <th rowSpan="2">phase</th>
+                    
+                    {activeTab === 'PIPING' ? (
+                      <>
+                        <th colSpan="3" className="th-group-piping">BLASTING / PRIMER</th>
+                        <th colSpan="3" className="th-group-piping">INTERMEDIATE</th>
+                        <th colSpan="3" className="th-group-piping">TOP COAT</th>
+                      </>
+                    ) : (
+                      <>
+                        <th colSpan="3" className="th-group-wrapping">WRAPPING / HOLIDAY</th>
+                        <th colSpan="3" className="th-group-wrapping">PRIMER</th>
+                        <th colSpan="3" className="th-group-wrapping">INNER WRAPPING</th>
+                        <th colSpan="3" className="th-group-wrapping">OUTER WRAPPING</th>
+                      </>
+                    )}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                  <tr>
+                    {/* Sub-headers for inspection reports */}
+                    <th>DATA</th><th>REPORT No.</th><th>RESULT</th>
+                    <th>DATA</th><th>REPORT No.</th><th>RESULT</th>
+                    <th>DATA</th><th>REPORT No.</th><th>RESULT</th>
+                    {activeTab === 'WRAPPING' && <><th>DATA</th><th>REPORT No.</th><th>RESULT</th></>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {pipingData.map((row, idx) => (
+                    <tr key={row.id}>
+                      <td>{row.rowNo}</td>
+                      <td><b>{row.lineNo}</b></td>
+                      <td>{row.spoolNo}</td>
+                      <td>{row.sheetNo}</td>
+                      <td>{row.paintSys}</td>
+                      <td>{row.rev}</td>
+                      <td>{row.fluid}</td>
+                      <td>{row.unitNo}</td>
+                      <td>{row.serialNo}</td>
+                      <td>{row.pipingClass}</td>
+                      <td>{row.size}</td>
+                      <td>{row.insType}</td>
+                      <td>{row.row}</td>
+                      <td>{row.insThk}</td>
+                      <td>{row.phase}</td>
+                      
+                      {/* Blasting / Primer */}
+                      <td>{row.bData}</td>
+                      <td>{row.bReport}</td>
+                      <td><span className={`st-${row.bResult}`}>{row.bResult}</span></td>
+                      
+                      {/* Intermediate */}
+                      <td>{row.iData}</td>
+                      <td>{row.iReport}</td>
+                      <td><span className={`st-${row.iResult}`}>{row.iResult}</span></td>
+
+                      {/* Top Coat */}
+                      <td>{row.tData}</td>
+                      <td>{row.tReport}</td>
+                      <td><span className={`st-${row.tResult}`}>{row.tResult}</span></td>
+
+                      {activeTab === 'WRAPPING' && (
+                        <>
+                          <td>-</td><td>-</td><td><span className="st-PENDING">PENDING</span></td>
+                        </>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       );
