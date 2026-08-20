@@ -109,3 +109,108 @@
   </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدیریت پایپینگ و رنگ‌آمیزی پروژه</title>
+  
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { margin: 0; padding: 20px; background-color: #0F1E2E; color: #D4E5F7; }
+    .card { background: #0F2240; border: 1px solid #1A3A5C; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #1A3A5C; padding: 10px; text-align: right; }
+    th { background: #0C1A2E; color: #2D7DD2; }
+    input, select { background: #0C1A2E; border: 1px solid #1A3A5C; color: #fff; padding: 8px; border-radius: 4px; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const SAMPLE_DATA = [
+      { lineNo: "LINE-1001-A1", system: "1A", type: "PT", stage: "Top Coat", status: "ACCEPTED", inspector: "علی محمدی" },
+      { lineNo: "LINE-1002-B2", system: "2A", type: "PT", stage: "Intermediate Coat", status: "IN_PROGRESS", inspector: "رضا حسینی" },
+      { lineNo: "LINE-2001-UW", system: "UW-1", type: "UW", stage: "Primer", status: "REJECTED", inspector: "امیر طاهری" }
+    ];
+
+    function App() {
+      const [lines, setLines] = useState(SAMPLE_DATA);
+      const [search, setSearch] = useState("");
+
+      const filteredLines = lines.filter(l => l.lineNo.toLowerCase().includes(search.toLowerCase()));
+
+      return (
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ margin: 0, color: '#2D7DD2' }}>سامانه جامع مدیریت و بازرسی رنگ پایپینگ</h2>
+              <p style={{ margin: '5px 0 0 0', color: '#5A7A9A' }}>پایش آنلاین بیش از ۱۰۰۰ لاین و سابقه تست‌ها</p>
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <span className="badge" style={{ background: '#22C55E22', color: '#22C55E', border: '1px solid #22C55E' }}>دیتابیس فعال</span>
+            </div>
+          </div>
+
+          <div className="card">
+            <input 
+              type="text" 
+              placeholder="جستجوی لاین نامبر (مثلاً LINE-1001)..." 
+              value={search} 
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="card">
+            <h3>جدول سابقه بازرسی لاین‌ها (Joint History)</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>لاین نامبر</th>
+                  <th>سیستم رنگ</th>
+                  <th>نوع پوشش</th>
+                  <th>مرحله فعلی</th>
+                  <th>وضعیت بازرسی</th>
+                  <th>بازرس</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredLines.map((item, index) => (
+                  <tr key={index}>
+                    <td><b>{item.lineNo}</b></td>
+                    <td>{item.system}</td>
+                    <td>{item.type}</td>
+                    <td>{item.stage}</td>
+                    <td>
+                      <span className="badge" style={{
+                        background: item.status === 'ACCEPTED' ? '#22C55E33' : item.status === 'REJECTED' ? '#EF444433' : '#F59E0B33',
+                        color: item.status === 'ACCEPTED' ? '#22C55E' : item.status === 'REJECTED' ? '#EF4444' : '#F59E0B'
+                      }}>
+                        {item.status}
+                      </span>
+                    </td>
+                    <td>{item.inspector}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
